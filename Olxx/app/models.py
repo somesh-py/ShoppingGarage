@@ -1,5 +1,6 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
+from .manager import CustomManager
 
 GENDER = (
     ('male', 'Male'),
@@ -34,12 +35,23 @@ STATE_CHOICES = (
 )
 
 class User(AbstractUser):
-    email = models.EmailField(max_length=254)
+
+    username=None
+
+    email = models.EmailField(max_length=254,unique=True)
     wish_list = models.CharField(max_length=100, choices=CHOICES)
     gender = models.CharField(max_length=50, choices=GENDER)
     is_verified = models.BooleanField(default=False)
+    locality=models.CharField(max_length=50)
     state = models.CharField(max_length=50, choices=STATE_CHOICES)
+    zipcode=models.IntegerField(null=True)
     address = models.CharField(max_length=50)
+
+    USERNAME_FIELD='email'
+
+    objects=CustomManager()
+
+    REQUIRED_FIELDS=[]
 
     groups = models.ManyToManyField(
         'auth.Group',
@@ -57,8 +69,40 @@ class User(AbstractUser):
         verbose_name='user permissions'
     )
 
+CATEGORY_CHOICES =(
+    ('B', 'Bikes'),
+    ('EA','Electronics & Appliances'),
+    ('B','Books'),
+    ('S', 'Sports'),
+    ('C', 'Cars'),
+    ('CVS', 'Commercial Vehicles & Spares'),
+) 
 
+class Product(models.Model):
+    title=models.CharField(max_length=100)
+    selling_price=models.FloatField()
+    discounted_price=models.FloatField()
+    description=models.TextField()
+    brand = models.CharField(max_length=200)
+    category = models.CharField(choices = CATEGORY_CHOICES,max_length=5)
+    product_image = models.ImageField(upload_to='producting')
 
+class Cart(models.Model):
+    user=models.ForeignKey(User,on_delete=models.CASCADE)
+    product=models.ForeignKey(Product,on_delete=models.CASCADE)
+    quantity=models.PositiveIntegerField(default=1)
 
+STAUS_CHOICES = (
+    ('Accepted', 'Accepted'),
+    ('packed','packed'),
+    ('On The Way','On The Way'),
+    ('Delivered', 'Delivered'),
+    ('Cancel','Cancel')
+)    
 
-
+class OrderPlaced(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    quantity = models.PositiveIntegerField(default =1)
+    ordered_date = models.DateTimeField(auto_now_add=True)
+    status = models.CharField(max_length =50, choices = STAUS_CHOICES,default='Pending')
