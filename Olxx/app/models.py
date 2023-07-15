@@ -39,13 +39,13 @@ class User(AbstractUser):
     username=None
 
     email = models.EmailField(max_length=254,unique=True)
-    wish_list = models.CharField(max_length=100, choices=CHOICES)
     gender = models.CharField(max_length=50, choices=GENDER)
     is_verified = models.BooleanField(default=False)
     locality=models.CharField(max_length=50)
     state = models.CharField(max_length=50, choices=STATE_CHOICES)
     zipcode=models.IntegerField(null=True)
     address = models.CharField(max_length=50)
+    otp=models.CharField(max_length=5)
 
     USERNAME_FIELD='email'
 

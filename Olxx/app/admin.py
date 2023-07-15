@@ -5,7 +5,7 @@ from .models import User,Product,Cart,OrderPlaced
 
 @admin.register((User))
 class UserModelAdmin(admin.ModelAdmin):
-    list_display=['id','username','first_name','last_name','email','wish_list','gender','is_verified','locality','state','zipcode','address','password','last_login','is_superuser','is_staff','is_active','date_joined']
+    list_display=['id','username','first_name','last_name','email','gender','is_verified','locality','state','zipcode','address','password','last_login','is_superuser','is_staff','is_active','date_joined']
 
 @admin.register((Product))
 class ProductModelAdmin(admin.ModelAdmin):

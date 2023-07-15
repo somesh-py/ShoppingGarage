@@ -168,6 +168,10 @@
     <nav class="navbar navbar-dark bg-dark fixed-top">
         <div class="container-fluid">
           <a class="navbar-brand" href="#"><b>SHopping Garage<b></a>
+
+            {% if user %}
+            <h2 style="color:white;"></h2>{{user.name}}</h2>
+            {% endif %}
           <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDarkNavbar" aria-controls="offcanvasDarkNavbar" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
@@ -231,12 +235,12 @@
       
       <footer class="footer">
         <div class="footer__addr">
-          <h1 class="footer__logo">Something</h1>
+          <h1 class="footer__logo">Generated Somesh Sharma</h1>
               
           <h2 style="color: aliceblue;">Contact</h2>
           
           <address>
-            5534 Somewhere In. The World 22193-10212<br>
+            sharmasomesh619@gmail.com<br>
                 
             <a class="footer__btn" href="mailto:example@gmail.com">Email Us</a>
           </address>
@@ -311,10 +315,10 @@
         </ul>
         
         <div class="legal">
-          <p>&copy; 2019 Something. All rights reserved.</p>
+          <p>&copy; 2023 SHoppingGarage. All rights reserved.</p>
           
           <div class="legal__links">
-            <span>Made with <span class="heart">♥</span> remotely from Anywhere</span>
+            <span>Made with <span class="heart">♥</span> by Brain</span>
           </div>
         </div>
       </footer>
