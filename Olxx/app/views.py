@@ -42,7 +42,7 @@ def registrationdata(request):
                 state=state,
                 zipcode=zipcode,
                 address=address,
-                password=password_hash,
+                password=password,
                 otp=otp
             )
 
@@ -92,9 +92,10 @@ def logincredentials(request):
             if User.objects.filter(email=email).exists():
                 user=User.objects.get(email=email)
                 print(user)
-                dbpassword=user.password
-                print(dbpassword)
-                if check_password(ppassword,dbpassword):
+                password=user.password
+                print(password)
+                # if check_password(ppassword,dbpassword):
+                if User.objects.filter(password=password).exists():
                     if user.is_verified==True:
                         user=User.objects.get(email=email)
                         print(user)
