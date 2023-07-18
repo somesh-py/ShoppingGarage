@@ -3,11 +3,11 @@ from . import views
 
 
 urlpatterns = [
-    path('',views.Home),
-    path('reg/',views.registration),
+    path('home/',views.Home),
+    path('',views.registration),
     path('regdata/',views.registrationdata),
-    path('otp/',views.Fotp),
-    path('verifyotp/',views.verifyotp),
+    path('otphtml/',views.otphtml),
+    path('verify-otp/',views.verifyotp),
     path('loginp/',views.login),
     path('log-in-data/',views.logincredentials),
 ]

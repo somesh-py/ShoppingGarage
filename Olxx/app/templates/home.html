@@ -10,6 +10,12 @@
 
 </head>
 <body>
+
+  {% if user %}
+    {% block userD %}{{user.first_name}}{% endblock userD %}
+  {% endif %}
+  
+
   {% block image_slider %}
     
   <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel">
