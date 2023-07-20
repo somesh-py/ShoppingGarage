@@ -1,5 +1,5 @@
 from django.shortcuts import render,redirect
-from .models import User
+from .models import User,Product
 import math,random
 from django.core.mail import send_mail
 from datetime import timezone,timedelta,datetime
@@ -107,64 +107,29 @@ def logincredentials(request):
             else:
                 return render(request,'login.html',{'msg':'email does not exists'})
 
+def productpalced(request):
+    return render(request,'productplaced.html')
 
-# def logincredentials(request):
-#     if request.method == 'POST':
-#         email = request.POST['email']
-#         password = request.POST['password']
+def productpalceddata(request):
+    if request.method=='POST':
+        title=request.POST['title']
+        selling_price=request.POST['selling_price']
+        discounted_price=request.POST['discounted_price']
+        brand=request.POST['brand']
+        category=request.POST['category']
+        description=request.POST['description']
+        product_image=request.FILES.get('product_image')
+        email=request.POST['email']
+        password=request.POST['password']
 
-#         if User.objects.filter(email=email).exists():
-#             user = User.objects.get(email=email)
-#             dbpassword = user.password
-
-#             if check_password(password, dbpassword):
-#                 if user.is_verified:
-#                     return render(request, 'home.html', {'user': user})
-#                 else:
-#                     return render(request, 'login.html', {'msg': 'User is not verified. Please verify your email.'})
-#             else:
-#                 return render(request, 'login.html', {'msg': 'Incorrect password. Please enter a valid password.'})
-#         else:
-#             return render(request, 'login.html', {'msg': 'Email does not exist.'})
-#     else:
-#         return render(request, 'login.html')
-
-
-# def logincredentials(request):
-#     if request.method == 'POST':
-#         email = request.POST['email']
-#         password = request.POST['password']
-
-#         user = authenticate(request, email=email, password=password)
-
-#         if user is not None:
-#             if user.is_verified:
-#                 return render(request, 'home.html', {'user': user})
-#             else:
-#                 return render(request, 'login.html', {'msg': 'User is not verified. Please verify your email.'})
-#         else:
-#             return render(request, 'login.html', {'msg': 'Incorrect email or password.'})
-
-#     else:
-#         return render(request, 'login.html')
-
-
-# def logincredentials(request):
-#     if request.method == 'POST':
-#         email = request.POST['email']
-#         password = request.POST['password']
-
-#         if User.objects.filter(email=email).exists():
-#             user = User.objects.get(email=email)
-
-#             if user.check_password(password):
-#                 if user.is_verified:
-#                     return render(request, 'home.html', {'user': user})
-#                 else:
-#                     return render(request, 'login.html', {'msg': 'User is not verified. Please verify your email.'})
-#             else:
-#                 return render(request, 'login.html', {'msg': 'Incorrect password. Please enter a valid password.'})
-#         else:
-#             return render(request, 'login.html', {'msg': 'Email does not exist.'})
-#     else:
-#         return render(request, 'login.html')
+        if User.objects.filter(email=email).exists():
+            user=User.objects.get(email=email)
+            userpassword=user.password
+            if User.objects.filter(password=userpassword).exists():
+                Product.objects.create(title=title,selling_price=selling_price,discounted_price=discounted_price,brand=brand,
+                                   category=category,description=description,product_image=product_image,email=email)
+                return render(request,'home.html',{'user':user})
+            else:
+                return render(request,'productplaced.html',{'msg':'check your password'})
+        else:
+            return render(request,'productplaced.html',{'msg':'check your email'})

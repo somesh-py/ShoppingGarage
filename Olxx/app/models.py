@@ -72,7 +72,7 @@ class User(AbstractUser):
 CATEGORY_CHOICES =(
     ('B', 'Bikes'),
     ('EA','Electronics & Appliances'),
-    ('B','Books'),
+    ('BKS','Books'),
     ('S', 'Sports'),
     ('C', 'Cars'),
     ('CVS', 'Commercial Vehicles & Spares'),
@@ -85,7 +85,8 @@ class Product(models.Model):
     description=models.TextField()
     brand = models.CharField(max_length=200)
     category = models.CharField(choices = CATEGORY_CHOICES,max_length=5)
-    product_image = models.ImageField(upload_to='producting')
+    product_image = models.ImageField(upload_to='product_image')
+    email=models.EmailField(max_length=254)
 
 class Cart(models.Model):
     user=models.ForeignKey(User,on_delete=models.CASCADE)
